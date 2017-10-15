@@ -84,8 +84,16 @@ else
 fi
 
 datefunc() {
-  # TODO: detect OSX and then use gdate from coreutils (or use -v?)
-  date -d "${1}" "${2}"
+  if [ "$(uname)" = 'Darwin' ]; then
+    if which -s gdate >/dev/null; then
+      date='gdate'
+    else
+      fail 'Missing gdate command. Perhaps brew install coreutils?'
+    fi
+  else
+    date='date'
+  fi
+  $date -d "${1}" "${2}"
 }
 
 calc_payroll_date() {
