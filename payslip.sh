@@ -106,15 +106,15 @@ calc_payroll_date() {
 }
 
 calc_run_entry_code() {
-# this is tax year offset (Apr2017 is '20170001' and Mar2018 is '20170012' I guess)
-MONTH="$(datefunc "${1}" '+%-m')"
-YEAR="$(datefunc "${1}" '+%Y')"
+  # this is tax year offset (Apr2017 is '20170001' and Mar2018 is '20170012' I guess)
+  MONTH="$(datefunc "${1}" '+%-m')"
+  YEAR="$(datefunc "${1}" '+%Y')"
 
-if [ "${MONTH}" -lt '4' ]; then
-  echo "$((${YEAR} - 1))00$((${MONTH} + 9))"
-else
-  echo "${YEAR}000$((${MONTH} - 3))"
-fi
+  if [ "${MONTH}" -lt '4' ]; then
+    echo "$((${YEAR} - 1))00$((${MONTH} + 9))"
+  else
+    echo "${YEAR}000$((${MONTH} - 3))"
+  fi
 }
 
 if [ "$(echo -n "${PAYSLIP_DATE}" | wc -c)" -eq 7 ]; then
