@@ -80,13 +80,13 @@ EE_PAYROLL_CODE='001'
 EE_SEPARATE_CHECK='0'
 
 wget -q --user="${USERNAME}" "${PASSWORD_ARG}" \
-  --save-cookies cookies.txt \
+  --save-cookies 'cookies.txt' \
   --keep-session-cookies \
   --delete-after \
   'https://myfreedom.adp.com/essprotected/ukPortalLogin.asp'
 
 TOKEN="$(wget -q -O - \
-  --load-cookies cookies.txt \
+  --load-cookies 'cookies.txt' \
   'https://fress2.adp.com/core/coreControl.asp?ProductType=0' \
   | grep sessionToken | cut -d "'" -f2)"
 
@@ -102,9 +102,9 @@ MONTH='1'           # for P60 set to '4'
 #PayeRef=XX12345
 
 wget -q \
-  --load-cookies cookies.txt \
+  --load-cookies 'cookies.txt' \
   --output-document="${OUT_FILE}" \
-  --header="Referer: https://fress2.adp.com/eforms/PdfDisplay.aspx" \
+  --header='Referer: https://fress2.adp.com/eforms/PdfDisplay.aspx' \
 "https://fress2.adp.com/eforms/PdfBuilder.aspx?\
 f=${FUNCTION}&\
 j=${JURISDICTION}&\
