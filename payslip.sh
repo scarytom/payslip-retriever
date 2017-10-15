@@ -1,4 +1,4 @@
-#!/bin/sh -eu
+#!/bin/bash -eu
 
 PROGNAME="$(basename "${0}")"
 
