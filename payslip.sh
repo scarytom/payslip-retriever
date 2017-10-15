@@ -85,7 +85,7 @@ fi
 
 datefunc() {
   if [ "$(uname)" = 'Darwin' ]; then
-    if which -s gdate >/dev/null; then
+    if which gdate >/dev/null; then
       date='gdate'
     else
       fail 'Missing gdate command. Perhaps brew install coreutils?'
