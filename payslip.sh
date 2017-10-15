@@ -36,7 +36,27 @@ fail() {
   exit 1
 }
 
-PAYSLIP_DATE="$(date '+%Y-%m')"
+datefunc() {
+  if [ "$(uname)" = 'Darwin' ]; then
+    if which gdate >/dev/null; then
+      date='gdate'
+    else
+      fail 'Missing gdate command. Perhaps brew install coreutils?'
+    fi
+  else
+    date='date'
+  fi
+  $date -d "${1}" "${2}"
+}
+
+PAY_DATE='27'
+
+if [[ "$(date +%d)" < "${PAY_DATE}" ]]; then
+  PAYSLIP_DATE="$(datefunc '-1 month' '+%Y-%m')"
+else
+  PAYSLIP_DATE="$(date '+%Y-%m')"
+fi
+
 PASSWORD_FILE='/dev/null'
 OUT_FILE='payslip.pdf'
 
@@ -83,23 +103,10 @@ else
   PASSWORD_ARG='--ask-password'
 fi
 
-datefunc() {
-  if [ "$(uname)" = 'Darwin' ]; then
-    if which gdate >/dev/null; then
-      date='gdate'
-    else
-      fail 'Missing gdate command. Perhaps brew install coreutils?'
-    fi
-  else
-    date='date'
-  fi
-  $date -d "${1}" "${2}"
-}
-
 calc_payroll_date() {
-  # first weekday on-or-before 27th of the month
+  # first weekday on-or-before $PAY_DATE of the month
   YEARMONTH="$(datefunc "${1}" '+%Y-%m')"
-  TWENTYSEVENTH="${YEARMONTH}-27"
+  TWENTYSEVENTH="${YEARMONTH}-${PAY_DATE}"
   case "$(datefunc "${TWENTYSEVENTH}" '+%a')" in
     Sat)
       echo "${YEARMONTH}-26"
