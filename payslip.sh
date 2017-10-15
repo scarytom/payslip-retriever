@@ -73,8 +73,9 @@ else
   PASSWORD_ARG='--ask-password'
 fi
 
-PAY_RUN_CODE='201709270001'
-PAY_RUN_ENTRY_CODE='20170006'
+PAY_RUN_DATE='20170927'   # for August, set to '20170825'
+PAY_RUN_CODE="${PAY_RUN_DATE}0001"
+PAY_RUN_ENTRY_CODE='20170006' # this is tax year offset (Apr2017 is '20170001' and Mar2018 is '20170012' I guess)
 EE_PAYROLL_CODE='001'
 EE_SEPARATE_CHECK='0'
 
@@ -89,17 +90,28 @@ TOKEN="$(wget -q -O - \
   'https://fress2.adp.com/core/coreControl.asp?ProductType=0' \
   | grep sessionToken | cut -d "'" -f2)"
 
+JURISDICTION='UK'
+FUNCTION='EPayslip' # for P60 set to 'EP60'
+E_DATE='20070101'   # for P60 set to '20160406' say
+YEAR='2007'         # for P60 set to '2016' say
+QUARTER='1'         # for P60 set to '2'
+MONTH='1'           # for P60 set to '4'
+
+# need to find out what happens to these (for P60)
+#TaxOffice=384
+#PayeRef=XX12345
+
 wget -q \
   --load-cookies cookies.txt \
   --output-document="${OUT_FILE}" \
   --header="Referer: https://fress2.adp.com/eforms/PdfDisplay.aspx" \
 "https://fress2.adp.com/eforms/PdfBuilder.aspx?\
-f=EPayslip&\
-j=UK&\
-y=2007&\
-q=1&\
-m=1&\
-ed=20070101&\
+f=${FUNCTION}&\
+j=${JURISDICTION}&\
+y=${YEAR}&\
+q=${QUARTER}&\
+m=${MONTH}&\
+ed=${E_DATE}&\
 e=${EMPLOYEE_CODE}&\
 p=${PAY_RUN_CODE}&\
 pec=${PAY_RUN_ENTRY_CODE}&\
