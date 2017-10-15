@@ -169,15 +169,11 @@ SessionToken=${TOKEN}"
 
 rm cookies.txt
 
-if which -s strings >/dev/null; then
-  if strings "${OUT_FILE}" | grep -q "${EMPLOYEE_CODE}"; then
-    echo "Success! Output ${OUT_FILE}"
-    exit 0
-  else
-    fail 'PDF appears to be malformed. Likely wrong employee code or payroll date?'
-  fi
+if strings "${OUT_FILE}" | grep -q "${EMPLOYEE_CODE}"; then
+  echo "Success! Output ${OUT_FILE}"
+  exit 0
 else
-  echo "Missing strings binary, unable to attempt validation -- you\'re on your own ${OUT_FILE} might work, might not."
+  fail 'PDF appears to be malformed. Likely wrong employee code or payroll date?'
 fi
 
 # vim :set ts=2 sw=2 sts=2 et :
