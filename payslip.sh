@@ -23,6 +23,11 @@ usage() {
 	echo
 }
 
+fail() {
+        echo "${1}" >&2
+        exit 1
+}
+
 PASSWORD_FILE='/dev/null'
 
 while [ "${#}" -gt 0 ]
@@ -45,12 +50,14 @@ do
                 shift
 		;;
 	*)
-		echo "Invalid option '${1}'. Use --help to see the valid options" >&2
-		exit 1
+		fail "Invalid option '${1}'. Use --help to see the valid options"
 		;;
 	esac
 	shift
 done
+
+[ -z ${USERNAME+x} ] && fail "username is unset. Use --help for usage instructions"
+[ -z ${EMPLOYEE_CODE+x} ] && fail "employee code is unset. Use --help for usage instructions"
 
 if [ -f "${PASSWORD_FILE}" ]; then
   PASSWORD_ARG="--password=$(cat "${PASSWORD_FILE}")"
