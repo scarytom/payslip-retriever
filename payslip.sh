@@ -1,6 +1,6 @@
 #!/bin/sh -eu
 
-PROGNAME="$(basename ${0})"
+PROGNAME="$(basename "${0}")"
 
 usage() {
 	echo "Download payslip pdf from ADP Freedon"
@@ -56,8 +56,8 @@ do
 	shift
 done
 
-[ -z ${USERNAME+x} ] && fail "username is unset. Use --help for usage instructions"
-[ -z ${EMPLOYEE_CODE+x} ] && fail "employee code is unset. Use --help for usage instructions"
+[ -z "${USERNAME+x}" ] && fail "username is unset. Use --help for usage instructions"
+[ -z "${EMPLOYEE_CODE+x}" ] && fail "employee code is unset. Use --help for usage instructions"
 
 if [ -f "${PASSWORD_FILE}" ]; then
   PASSWORD_ARG="--password=$(cat "${PASSWORD_FILE}")"
