@@ -119,9 +119,9 @@ calc_run_entry_code() {
   YEAR="$(datefunc "${1}" '+%Y')"
 
   if [ "${MONTH}" -lt '4' ]; then
-    echo "$((${YEAR} - 1))00$((${MONTH} + 9))"
+    echo "$((YEAR - 1))00$((MONTH + 9))"
   else
-    echo "${YEAR}000$((${MONTH} - 3))"
+    echo "${YEAR}000$((MONTH - 3))"
   fi
 }
 
