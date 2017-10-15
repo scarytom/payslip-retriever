@@ -27,7 +27,7 @@ usage() {
 }
 
 fail() {
-        echo "${1}" >&2
+        echo "Error: ${1}" >&2
         exit 1
 }
 
@@ -115,6 +115,5 @@ if strings "${OUT_FILE}" | grep -q "${EMPLOYEE_CODE}"; then
   echo "Success! Output ${OUT_FILE}"
   exit 0
 else
-  echo 'Failed!'
-  exit 1
+  fail 'PDF appears to be malformed. Likely wrong employee code or payroll date?'
 fi
