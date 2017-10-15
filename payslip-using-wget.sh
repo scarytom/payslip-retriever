@@ -1,22 +1,21 @@
 #!/bin/sh -eu
 USERNAME="JBloggs@Mmarket"
-PASSWORD="you_wish"
 EMPLOYEE_CODE='1234567'
 
-wget -q --user="${USERNAME}" --password="${PASSWORD}" \
+wget -q --user="${USERNAME}" --ask-password \
   --save-cookies cookies.txt \
   --keep-session-cookies \
   --delete-after \
   'https://myfreedom.adp.com/essprotected/ukPortalLogin.asp'
 
-TOKEN="$(wget -q -O - --user="${USERNAME}" --password="${PASSWORD}" \
+TOKEN="$(wget -q -O - \
   --save-cookies cookies.txt \
   --keep-session-cookies \
   --load-cookies cookies.txt \
   "https://fress2.adp.com/core/coreControl.asp?ProductType=0" \
-  | grep sessionToken | cut -d "'" -f2)"
+  | sed -E '/.*sessionToken=\x27([^\x27]+).*/!d;s//\1/')"
 
-wget -q --user="${USERNAME}" --password="${PASSWORD}" \
+wget -q \
   --save-cookies cookies.txt \
   --keep-session-cookies \
   --load-cookies cookies.txt \
