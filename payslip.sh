@@ -3,7 +3,7 @@
 PROGNAME="$(basename "${0}")"
 
 usage() {
-	echo "Download payslip pdf from ADP Freedon"
+	echo "Download payslip pdf from ADP Freedom"
 	echo
 	echo "Usage: ${PROGNAME} -u <username> -e <employee code> [options]..."
 	echo
@@ -13,7 +13,7 @@ usage() {
 	echo "      This help text."
 	echo
 	echo "  -u <username>, --username <username>"
-	echo "      username for payroll system (e.g. JBloggs@Mmarket)"
+	echo "      username for payroll system (e.g. JBloggs@Company)"
 	echo
 	echo "  -e <employee code>, --employee-code <employee code>"
 	echo "      employee code for payroll system (e.g. 1234567)"
