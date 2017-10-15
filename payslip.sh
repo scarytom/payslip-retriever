@@ -1,4 +1,5 @@
 #!/bin/bash -eu
+PAY_DATE='27'
 
 PROGNAME="$(basename "${0}")"
 
@@ -21,7 +22,7 @@ usage() {
   echo "  -d <date>, --payslip-date <date>"
   echo "      date of the payslip"
   echo "      if you specify 'yyyy-mm' only, the day will be calculated best effort"
-  echo "      if unspecified, will use retrieve payslip for the current month"
+  echo "      if unspecified, will use retrieve payslip for the current month, or last month if not yet ${PAY_DATE} of the month"
   echo
   echo "  -p <file>, --password-file <file>"
   echo "      file containing password. if unspecified, program will prompt for password"
@@ -48,8 +49,6 @@ datefunc() {
   fi
   $date -d "${1}" "${2}"
 }
-
-PAY_DATE='27'
 
 if [[ "$(date +%d)" < "${PAY_DATE}" ]]; then
   PAYSLIP_DATE="$(datefunc '-1 month' '+%Y-%m')"
