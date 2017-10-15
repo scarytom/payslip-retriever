@@ -21,6 +21,9 @@ usage() {
 	echo "  -p <file>, --password-file <file>"
 	echo "      file containing password. if unspecified, program will prompt for password"
 	echo
+	echo "  -o <file>, --output <file>"
+	echo "      location to write the payslip pdf. if unspecified, program will default to payslip.pdf"
+	echo
 }
 
 fail() {
@@ -48,6 +51,10 @@ do
 		;;
 	-p|--password-file)
 		PASSWORD_FILE="${2}"
+                shift
+		;;
+	-o|--output)
+		OUT_FILE="${2}"
                 shift
 		;;
 	*)
