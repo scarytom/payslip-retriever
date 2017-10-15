@@ -29,6 +29,7 @@ fail() {
 }
 
 PASSWORD_FILE='/dev/null'
+OUT_FILE='payslip.pdf'
 
 while [ "${#}" -gt 0 ]
 do
@@ -83,7 +84,7 @@ TOKEN="$(wget -q -O - \
 
 wget -q \
   --load-cookies cookies.txt \
-  --output-document='payslip.pdf' \
+  --output-document="${OUT_FILE}" \
   --header="Referer: https://fress2.adp.com/eforms/PdfDisplay.aspx" \
 "https://fress2.adp.com/eforms/PdfBuilder.aspx?\
 f=EPayslip&\
@@ -102,3 +103,11 @@ title=ADP+Freedom&\
 SessionToken=${TOKEN}"
 
 rm cookies.txt
+
+if strings "${OUT_FILE}" | grep -q "${EMPLOYEE_CODE}"; then
+  echo "Success! Output ${OUT_FILE}"
+  exit 0
+else
+  echo 'Failed!'
+  exit 1
+fi
