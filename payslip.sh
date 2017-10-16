@@ -131,7 +131,7 @@ calc_run_entry_code() {
   fi
 }
 
-if [ "$(echo -n "${PAYSLIP_DATE}" | wc -c)" -eq 7 ]; then
+if [ "${#PAYSLIP_DATE}" -le '7' ]; then
   PAYSLIP_DATE="$(calc_payroll_date "${PAYSLIP_DATE}-01")"
 fi
 
