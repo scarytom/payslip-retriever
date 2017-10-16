@@ -1,4 +1,4 @@
-#!/bin/bash -eu
+#!/bin/sh -eu
 PAY_DATE='27'
 
 PROGNAME="$(basename "${0}")"
