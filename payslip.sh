@@ -183,11 +183,15 @@ SessionToken=${TOKEN}"
 
 rm cookies.txt
 
-if strings "${OUT_FILE}" | grep -q "${EMPLOYEE_CODE}"; then
-  echo "Success! Output ${OUT_FILE}"
-  exit 0
+if which strings >/dev/null; then
+  if strings "${OUT_FILE}" | grep -q "${EMPLOYEE_CODE}"; then
+    echo "Success! Output ${OUT_FILE}"
+    exit 0
+  else
+    fail 'PDF appears to be malformed. Likely wrong employee code or payroll date?'
+  fi
 else
-  fail 'PDF appears to be malformed. Likely wrong employee code or payroll date?'
+  echo 'PDF generated but strings command unavailable so unable to validate, suggest you do so manually'
 fi
 
 # vim :set ts=2 sw=2 sts=2 et :
