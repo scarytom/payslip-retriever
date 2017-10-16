@@ -50,7 +50,7 @@ datefunc() {
   $date -d "${1}" "${2}"
 }
 
-if [[ "$(date +%d)" < "${PAY_DATE}" ]]; then
+if [ "$(date +%d)" -lt "${PAY_DATE}" ]; then
   PAYSLIP_DATE="$(datefunc '-1 month' '+%Y-%m')"
 else
   PAYSLIP_DATE="$(date '+%Y-%m')"
