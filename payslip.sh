@@ -37,23 +37,20 @@ fail() {
   exit 1
 }
 
-datefunc() {
-  if [ "$(uname)" = 'Darwin' ]; then
-    if which gdate >/dev/null; then
-      date='gdate'
-    else
-      fail 'Missing gdate command. Perhaps brew install coreutils?'
-    fi
+if [ "$(uname)" = 'Darwin' ]; then
+  if which gdate >/dev/null; then
+    date='gdate'
   else
-    date='date'
+    fail 'Missing gdate command. Perhaps brew install coreutils?'
   fi
-  $date -d "${1}" "${2}"
-}
-
-if [ "$(datefunc 'now' '+%-d')" -lt "${PAY_DATE}" ]; then
-  PAYSLIP_DATE="$(datefunc '-1 month' '+%Y-%m')"
 else
-  PAYSLIP_DATE="$(datefunc 'now' '+%Y-%m')"
+  date='date'
+fi
+
+if [ "$($date -d 'now' '+%-d')" -lt "${PAY_DATE}" ]; then
+  PAYSLIP_DATE="$($date -d '-1 month' '+%Y-%m')"
+else
+  PAYSLIP_DATE="$($date -d 'now' '+%Y-%m')"
 fi
 
 PASSWORD_FILE='/dev/null'
@@ -104,9 +101,9 @@ fi
 
 calc_payroll_date() {
   # first weekday on-or-before $PAY_DATE of the month
-  YEARMONTH="$(datefunc "${1}" '+%Y-%m')"
+  YEARMONTH="$($date -d "${1}" '+%Y-%m')"
   TWENTYSEVENTH="${YEARMONTH}-${PAY_DATE}"
-  case "$(datefunc "${TWENTYSEVENTH}" '+%a')" in
+  case "$($date -d "${TWENTYSEVENTH}" '+%a')" in
     Sat)
       echo "${YEARMONTH}-26"
       ;;
@@ -121,8 +118,8 @@ calc_payroll_date() {
 
 calc_run_entry_code() {
   # this is tax year offset (Apr2017 is '20170001' and Mar2018 is '20170012' I guess)
-  MONTH="$(datefunc "${1}" '+%-m')"
-  YEAR="$(datefunc "${1}" '+%Y')"
+  MONTH="$($date -d "${1}" '+%-m')"
+  YEAR="$($date -d "${1}" '+%Y')"
 
   if [ "${MONTH}" -lt '4' ]; then
     echo "$((YEAR - 1))00$((MONTH + 9))"
@@ -135,7 +132,7 @@ if [ "${#PAYSLIP_DATE}" -le '7' ]; then
   PAYSLIP_DATE="$(calc_payroll_date "${PAYSLIP_DATE}-01")"
 fi
 
-PAY_RUN_CODE="$(datefunc "${PAYSLIP_DATE}" '+%Y%m%d')0001"
+PAY_RUN_CODE="$($date -d "${PAYSLIP_DATE}" '+%Y%m%d')0001"
 PAY_RUN_ENTRY_CODE="$(calc_run_entry_code "${PAYSLIP_DATE}")"
 EE_PAYROLL_CODE='001'
 EE_SEPARATE_CHECK='0'
