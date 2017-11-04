@@ -143,9 +143,9 @@ YEAR='2007'         # for P60 set to '2016' say
 QUARTER='1'         # for P60 set to '2'
 MONTH='1'           # for P60 set to '4'
 
-# need to find out what happens to these (for P60)
-#TaxOffice=384
-#PayeRef=XX12345
+# required for P60 generation only.
+TAX_OFFICE='384'
+PAYEE_REF='XX12345' # is this per employee or per employer?
 
 wget -q --user="${USERNAME}" "${PASSWORD_ARG}" \
   --save-cookies 'cookies.txt' \
@@ -174,6 +174,8 @@ p=${PAY_RUN_CODE}&\
 pec=${PAY_RUN_ENTRY_CODE}&\
 eepc=${EE_PAYROLL_CODE}&\
 eesc=${EE_SEPARATE_CHECK}&\
+t=${TAX_OFFICE}&\
+pr=${PAYEE_REF}&\
 action=GenerateFirst&\
 title=ADP+Freedom&\
 SessionToken=${TOKEN}"
