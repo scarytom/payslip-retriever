@@ -30,6 +30,9 @@ usage() {
   echo "  -o <file>, --output <file>"
   echo "      location to write the payslip pdf. if unspecified, program will default to payslip.pdf"
   echo
+  echo "  -v, --verbose"
+  echo "      be verbose, show the HTTP calls being made"
+  echo
 }
 
 fail() {
@@ -55,6 +58,7 @@ fi
 
 PASSWORD_FILE='/dev/null'
 OUT_FILE='payslip.pdf'
+VERBOSE='-q'
 
 while [ "${#}" -gt 0 ]
   do
@@ -82,6 +86,9 @@ while [ "${#}" -gt 0 ]
     -o|--output)
       OUT_FILE="${2}"
       shift
+      ;;
+    -v|--verbose)
+      VERBOSE=''
       ;;
     *)
       fail "Invalid option '${1}'. Use --help to see the valid options"
@@ -147,18 +154,18 @@ MONTH='1'           # for P60 set to '4'
 TAX_OFFICE='384'
 PAYEE_REF='XX12345' # is this per employee or per employer?
 
-wget -q --user="${USERNAME}" "${PASSWORD_ARG}" \
+wget ${VERBOSE} --user="${USERNAME}" "${PASSWORD_ARG}" \
   --save-cookies 'cookies.txt' \
   --keep-session-cookies \
   --delete-after \
   'https://myfreedom.adp.com/essprotected/ukPortalLogin.asp'
 
-TOKEN="$(wget -q -O - \
+TOKEN="$(wget ${VERBOSE} -O - \
   --load-cookies 'cookies.txt' \
   'https://fress2.adp.com/core/coreControl.asp?ProductType=0' \
   | grep sessionToken | cut -d "'" -f2)"
 
-wget -q \
+wget ${VERBOSE} \
   --load-cookies 'cookies.txt' \
   --output-document="${OUT_FILE}" \
   --header='Referer: https://fress2.adp.com/eforms/PdfDisplay.aspx' \
