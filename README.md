@@ -3,6 +3,7 @@ Automatically retrieve payslip PDFs from [ADP Freedom](https://myfreedom.adp.com
 See `./payslip.sh -h` for usage instructions.
 
 Requires `gdate` aka GNU date on macOS. You can obtain this with `brew install coreutils` if running Homebrew.
+Requires `wget` You can obtain this with `brew install wget` if running Homebrew.
 
 Assumptions:
  - You're in the UK and paid only once a month.
