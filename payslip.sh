@@ -164,7 +164,7 @@ wget ${VERBOSE} --user="${USERNAME}" "${PASSWORD_ARG}" \
 echo 'Obtaining session token...'
 TOKEN="$(wget ${VERBOSE} -O - \
   --load-cookies 'cookies.txt' \
-  'https://fress2.adp.com/core/coreControl.asp?ProductType=0' \
+  'https://fress1.adp.com/core/coreControl.asp?ProductType=0' \
   | grep sessionToken | cut -d "'" -f2)"
 
 echo 'Downloading payslip...'
