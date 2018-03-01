@@ -167,6 +167,10 @@ TOKEN="$(wget ${VERBOSE} -O - \
   'https://fress1.adp.com/core/coreControl.asp?ProductType=0' \
   | grep sessionToken | cut -d "'" -f2)"
 
+if [ -z "${TOKEN}" ]; then
+   fail 'sessionToken not found in repsonse from ADP.'
+fi
+
 echo 'Downloading payslip...'
 wget ${VERBOSE} \
   --load-cookies 'cookies.txt' \
