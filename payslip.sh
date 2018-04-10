@@ -169,14 +169,16 @@ TOKEN="$(wget ${VERBOSE} -O - \
 
 if [ -z "${TOKEN}" ]; then
    fail 'sessionToken not found in repsonse from ADP.'
+else
+  echo "Got session: ${TOKEN}"
 fi
 
 echo 'Downloading payslip...'
 wget ${VERBOSE} \
   --load-cookies 'cookies.txt' \
   --output-document="${OUT_FILE}" \
-  --header='Referer: https://fress2.adp.com/eforms/PdfDisplay.aspx' \
-"https://fress2.adp.com/eforms/PdfBuilder.aspx?\
+  --header='Referer: https://fress1.adp.com/eforms/PdfDisplay.aspx' \
+"https://fress1.adp.com/eforms/PdfBuilder.aspx?\
 f=${FUNCTION}&\
 j=${JURISDICTION}&\
 y=${YEAR}&\
