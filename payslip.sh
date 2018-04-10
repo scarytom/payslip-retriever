@@ -169,8 +169,6 @@ TOKEN="$(wget ${VERBOSE} -O - \
 
 if [ -z "${TOKEN}" ]; then
    fail 'sessionToken not found in repsonse from ADP.'
-else
-  echo "Got session: ${TOKEN}"
 fi
 
 echo 'Downloading payslip...'
