@@ -1,3 +1,5 @@
+# This code is not actively maintained and is currently broken due to changes on the ADP end.
+
 Automatically retrieve payslip PDFs from [ADP Freedom](https://myfreedom.adp.com), which ironically despite the name only works in Internet Explorer by default.
 
 See `./payslip.sh -h` for usage instructions.
